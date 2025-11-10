@@ -7,6 +7,7 @@ import { fileURLToPath } from "url";
 import ejsMate from "ejs-mate";
 import { connectDB } from "./config/db.js";
 import authRoutes from "./routes/auth.js";
+import cors from "cors";
 
 dotenv.config();
 const app = express();
@@ -26,6 +27,10 @@ connectDB(process.env.MONGO_URI);
 app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
+app.use(express.static(path.join(__dirname, "public")));
+
+app.use(cors());
+
 
 // Root route → redirect to login
 app.get("/", (req, res) => {

@@ -1,10 +1,59 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import { useState } from 'react'
+import './App.css'
 import './index.css'
-import App from './App.jsx'
+import HomePage from "./components/Home/HomePage.jsx";
+import React from "react";
+import ReactDOM from "react-dom/client";
+import FindTeam from './components/TeamPage/FindTeam.jsx'
+import Layout from './Layout.jsx'
+import Event from './components/EventPage/EventPage.jsx'
+import Profile from './components/ProfilePage/ProfilePage.jsx'
+import FindMember from './components/MemberPage/MemberPage.jsx'
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Navigate,
+} from "react-router-dom";
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-)
+
+
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Layout />,
+    // errorElement: <ErrorPage />,
+    children: [
+      {
+        index: true,
+        element: <HomePage />,
+      },
+      {
+        path: "/home",
+        element: <Navigate to={"/"} />,
+      },
+      {
+        path: "/findTeam",
+        element: <FindTeam />,
+      },
+      {
+        path: "/event",
+        element: <Event/>
+      },
+      {
+        path: "/profile",
+        element: <Profile/>
+      },
+      {
+        path: "/findmember",
+        element: <FindMember/>
+      }
+    ],
+  },
+]);
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <RouterProvider router={router} />
+  </React.StrictMode>
+);
